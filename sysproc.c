@@ -43,6 +43,18 @@ sys_getpid(void)
 }
 
 int
+sys_trace(void)
+{
+  int on;
+
+  if(argint(0, &on) < 0)
+    return -1;
+
+  myproc()->tracing = on;
+  return 0;
+}
+
+int
 sys_sbrk(void)
 {
   int addr;
