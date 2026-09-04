@@ -36,6 +36,7 @@ _usertests
 _wc
 _zombie
 _tracetest
+vectors.S
 
 # Generated debugger file
 .gdbinit
