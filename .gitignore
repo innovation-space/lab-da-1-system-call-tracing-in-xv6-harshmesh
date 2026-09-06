@@ -1,0 +1,42 @@
+# xv6 build artifacts
+*.o
+*.d
+*.asm
+*.sym
+
+# Generated binaries
+kernel
+mkfs
+bootblock
+bootblockother.o
+entryother
+initcode
+initcode.out
+
+# Generated xv6 images
+xv6.img
+fs.img
+xv6memfs.img
+xv6memfs.img
+
+# Generated user programs
+_cat
+_echo
+_forktest
+_grep
+_init
+_kill
+_ln
+_ls
+_mkdir
+_rm
+_sh
+_stressfs
+_usertests
+_wc
+_zombie
+_tracetest
+vectors.S
+
+# Generated debugger file
+.gdbinit
