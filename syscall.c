@@ -91,6 +91,7 @@ extern int sys_fork(void);
 extern int sys_fstat(void);
 extern int sys_getpid(void);
 extern int sys_trace(void);
+extern int sys_counter(void);
 extern int sys_kill(void);
 extern int sys_link(void);
 extern int sys_mkdir(void);
@@ -118,6 +119,7 @@ static int (*syscalls[])(void) = {
 [SYS_dup]     sys_dup,
 [SYS_getpid]  sys_getpid,
 [SYS_trace]   sys_trace,
+[SYS_counter] sys_counter,
 [SYS_sbrk]    sys_sbrk,
 [SYS_sleep]   sys_sleep,
 [SYS_uptime]  sys_uptime,
@@ -143,6 +145,7 @@ static char *syscall_names[] = {
 [SYS_dup]     "dup",
 [SYS_getpid]  "getpid",
 [SYS_trace]   "trace",
+[SYS_counter] "counter",
 [SYS_sbrk]    "sbrk",
 [SYS_sleep]   "sleep",
 [SYS_uptime]  "uptime",

@@ -101,3 +101,32 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+int
+sys_counter(void)
+{
+  int op;
+  int n;
+
+  if(argint(0, &op) < 0)
+    return -1;
+
+  if(argint(1, &n) < 0)
+    return -1;
+
+  if(op == 0){
+    counter_reset();
+    return 0;
+  }
+
+  if(op == 1){
+    counter_add(n);
+    return 0;
+  }
+
+  if(op == 2){
+    return counter_get();
+  }
+
+  return -1;
+}

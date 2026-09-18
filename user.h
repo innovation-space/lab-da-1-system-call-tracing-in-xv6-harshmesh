@@ -21,6 +21,7 @@ int chdir(const char*);
 int dup(int);
 int getpid(void);
 int trace(int);
+int counter(int, int);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);

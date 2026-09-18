@@ -121,6 +121,11 @@ int             wait(void);
 void            wakeup(void*);
 void            yield(void);
 
+// race.c
+void            counter_reset(void);
+void            counter_add(int);
+int             counter_get(void);
+
 // swtch.S
 void            swtch(struct context**, struct context*);
 

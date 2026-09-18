@@ -20,16 +20,48 @@ extern void trapret(void);
 
 static void wakeup1(void *chan);
 
+volatile int shared_counter = 0;
+struct spinlock counter_lock;
+
 void
 pinit(void)
 {
   initlock(&ptable.lock, "ptable");
+  initlock(&counter_lock, "counter");
 }
 
 // Must be called with interrupts disabled
 int
 cpuid() {
   return mycpu()-cpus;
+}
+
+// Counter helper function (custom implementation)
+void
+counter_reset(void)
+{
+  shared_counter = 0;
+}
+
+void
+counter_add(int n)
+{
+  int i, j, temp;
+
+  for(i = 0; i < n; i++){
+    temp = shared_counter;
+
+    for(j = 0; j < 100; j++)
+      ;
+
+    shared_counter = temp + 1;
+  }
+}
+
+int
+counter_get(void)
+{
+  return shared_counter;
 }
 
 // Must be called with interrupts disabled to avoid the caller being
