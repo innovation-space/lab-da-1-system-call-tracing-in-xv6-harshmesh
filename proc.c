@@ -49,12 +49,14 @@ counter_add(int n)
   int i, j, temp;
 
   for(i = 0; i < n; i++){
+    acquire(&counter_lock);
     temp = shared_counter;
 
     for(j = 0; j < 100; j++)
       ;
 
     shared_counter = temp + 1;
+    release(&counter_lock);
   }
 }
 
