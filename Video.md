@@ -18,9 +18,15 @@
 
 ---
 
-# Lab 3: Race Condition & Spinlocks in xv6
+## Lab 3: Race Condition & Spinlocks in xv6
 **Video Link:** https://drive.google.com/file/d/1lxoGa2P932jYBXfsnM7d7KmQXzBJs0fL/view?usp=sharing
 
-## Timestamps
-- `00:00 - 03:17`: Harshit — Unsynchronized counter syscall implementation, race condition demonstration on CPUS=2.
-- `03:17 - 11:10`: Prathamesh — Whiteboard analogy, critical section protection via acquire/release spinlocks, live demonstration of deterministic consistency (400,000 / 400,000).
+### Team Member Timestamps
+- **00:00 - 03:17**: Harshit — Unsynchronized counter syscall implementation, race condition demonstration on CPUS=2
+- **03:17 - 11:10**: Prathamesh — Whiteboard analogy, critical section protection via acquire/release spinlocks, live demonstration of deterministic consistency (400,000 / 400,000)
+
+---
+
+## Contributors
+- **Prathamesh Chalak** (24BCT0286)
+- **Harshit Sharma Thakur** (24BCE0437)
