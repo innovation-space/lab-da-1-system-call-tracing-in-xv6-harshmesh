@@ -27,6 +27,15 @@
 
 ---
 
+## Lab 4: Preemptive Scheduling Through Timer Interrupts
+**Video Link:** https://drive.google.com/file/d/1J7Xg-B6LKojXKfNMyjVnDoRjXFz73-7y/view?usp=drive_link
+
+### Team Member Timestamps
+- **00:00 - 05:02**: Harshit — Conditional Breakpoint in trap(), Timer Interrupt Hits (T_IRQ0 + IRQ_TIMER), and Trap Frame Inspection (*tf)
+- **05:02 - 12:29**: Prathamesh — Context Switch Path (trap -> yield -> sched), Process State & EIP Inspection (*proc, proc->tf->eip), and Conceptual Explanations on Preemption
+
+---
+
 ## Contributors
 - **Prathamesh Chalak** (24BCT0286)
 - **Harshit Sharma Thakur** (24BCE0437)
