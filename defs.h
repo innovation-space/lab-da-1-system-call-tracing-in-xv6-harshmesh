@@ -9,6 +9,7 @@ struct spinlock;
 struct sleeplock;
 struct stat;
 struct superblock;
+struct vminfo;
 
 // bio.c
 void            binit(void);
@@ -176,6 +177,7 @@ void            uartintr(void);
 void            uartputc(int);
 
 // vm.c
+int             lookupuvm(uint, struct vminfo*);
 void            seginit(void);
 void            kvmalloc(void);
 pde_t*          setupkvm(void);

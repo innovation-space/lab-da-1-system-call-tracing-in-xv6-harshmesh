@@ -183,6 +183,7 @@ UPROGS=\
 	_zombie\
 	_tracetest\
 	_race\
+	_memtest\
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)

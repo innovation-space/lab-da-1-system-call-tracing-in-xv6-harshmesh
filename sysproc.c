@@ -6,6 +6,7 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+#include "vminfo.h"
 
 int
 sys_fork(void)
@@ -129,4 +130,34 @@ sys_counter(void)
   }
 
   return -1;
+}
+
+int
+sys_vmlookup(void)
+{
+  int va;
+  char *dst;
+  uint start, a, last;
+  struct proc *p = myproc();
+  struct vminfo info, page;
+
+  if(argint(0, &va) < 0 || argptr(1, &dst, sizeof(info)) < 0)
+    return -1;
+  start = (uint)dst;
+  // Subtraction checks the entire buffer without unsigned wraparound.
+  if(start >= p->sz || start >= KERNBASE ||
+     sizeof(info) > p->sz - start || sizeof(info) > KERNBASE - start)
+    return -1;
+  if(lookupuvm((uint)va, &info) < 0)
+    return -1;
+
+  // argptr only checks size. Check every page before copyout, which
+  // otherwise neither checks PTE_W nor safely handles a missing PDE.
+  last = PGROUNDDOWN(start + sizeof(info) - 1);
+  for(a = PGROUNDDOWN(start); a <= last; a += PGSIZE){
+    if(lookupuvm(a, &page) < 0 || !(page.flags & PTE_W) ||
+       !(p->pgdir[PDX(a)] & PTE_W))
+      return -1;
+  }
+  return copyout(p->pgdir, start, &info, sizeof(info));
 }
