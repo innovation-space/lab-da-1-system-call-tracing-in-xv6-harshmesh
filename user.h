@@ -1,5 +1,6 @@
 struct stat;
 struct rtcdate;
+struct vminfo;
 
 // system calls
 int fork(void);
@@ -22,6 +23,7 @@ int dup(int);
 int getpid(void);
 int trace(int);
 int counter(int, int);
+int vmlookup(uint, struct vminfo*);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);

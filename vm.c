@@ -6,6 +6,7 @@
 #include "mmu.h"
 #include "proc.h"
 #include "elf.h"
+#include "vminfo.h"
 
 extern char data[];  // defined by kernel.ld
 pde_t *kpgdir;  // for use in scheduler()
@@ -52,6 +53,27 @@ walkpgdir(pde_t *pgdir, const void *va, int alloc)
     *pde = V2P(pgtab) | PTE_P | PTE_W | PTE_U;
   }
   return &pgtab[PTX(va)];
+}
+
+// Inspect only the calling process. alloc=0 never creates page tables.
+int
+lookupuvm(uint va, struct vminfo *info)
+{
+  struct proc *p = myproc();
+  pte_t *pte;
+  pde_t pde;
+
+  if(va >= KERNBASE || va >= p->sz)
+    return -1;
+  pde = p->pgdir[PDX(va)];
+  if((pde & (PTE_P | PTE_U)) != (PTE_P | PTE_U) || (pde & PTE_PS))
+    return -1;
+  pte = walkpgdir(p->pgdir, (void*)PGROUNDDOWN(va), 0);
+  if(pte == 0 || (*pte & (PTE_P | PTE_U)) != (PTE_P | PTE_U))
+    return -1;
+  info->physical_page = PTE_ADDR(*pte);
+  info->flags = PTE_FLAGS(*pte);
+  return 0;
 }
 
 // Create PTEs for virtual addresses starting at va that refer to
