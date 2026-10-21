@@ -114,6 +114,25 @@ sys_fstat(void)
   return filestat(f, st);
 }
 
+// Inspect an already open, readable regular file without changing its offset.
+// All arguments and the result are integers; there is no user output pointer.
+int
+sys_blockmap(void)
+{
+  struct file *f;
+  int bn, table, result;
+
+  if(argfd(0, 0, &f) < 0 || argint(1, &bn) < 0 || argint(2, &table) < 0)
+    return -1;
+  if(f->type != FD_INODE || !f->readable || bn < 0 ||
+     (table != 0 && table != 1))
+    return -1;
+  ilock(f->ip);
+  result = blocklookup(f->ip, (uint)bn, table);
+  iunlock(f->ip);
+  return result;
+}
+
 // Create the path new as a link to the same inode as old.
 int
 sys_link(void)

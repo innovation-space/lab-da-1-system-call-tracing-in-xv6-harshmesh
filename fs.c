@@ -399,6 +399,35 @@ bmap(struct inode *ip, uint bn)
   panic("bmap: out of range");
 }
 
+// Read-only block lookup. Caller holds ip->lock; never call bmap(),
+// since bmap() can allocate. table=1 returns the indirect table block.
+int
+blocklookup(struct inode *ip, uint bn, int table)
+{
+  uint addr, indirect = 0;
+  uint firstdata = sb.size - sb.nblocks;
+  struct buf *bp;
+
+  if(ip->type != T_FILE || ip->size == 0 || bn >= MAXFILE ||
+     bn > (ip->size - 1) / BSIZE || (table != 0 && table != 1))
+    return -1;
+  if(bn < NDIRECT){
+    if(table)
+      return -1;
+    addr = ip->addrs[bn];
+  } else {
+    indirect = ip->addrs[NDIRECT];
+    if(indirect < firstdata || indirect >= sb.size)
+      return -1;
+    bp = bread(ip->dev, indirect);
+    addr = ((uint*)bp->data)[bn - NDIRECT];
+    brelse(bp);
+  }
+  if(addr < firstdata || addr >= sb.size)
+    return -1;
+  return table ? indirect : addr;
+}
+
 // Truncate inode (discard contents).
 // Only called when the inode has no links
 // to it (no directory entries referring to it)

@@ -24,6 +24,7 @@ int getpid(void);
 int trace(int);
 int counter(int, int);
 int vmlookup(uint, struct vminfo*);
+int blockmap(int, int, int);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);

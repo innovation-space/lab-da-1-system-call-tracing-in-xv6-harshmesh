@@ -184,6 +184,7 @@ UPROGS=\
 	_tracetest\
 	_race\
 	_memtest\
+	_fstest\
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)

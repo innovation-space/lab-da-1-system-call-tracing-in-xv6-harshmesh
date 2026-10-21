@@ -23,3 +23,4 @@
 #define SYS_trace  22
 #define SYS_counter 23
 #define SYS_vmlookup 24
+#define SYS_blockmap 25
